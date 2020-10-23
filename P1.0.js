@@ -1,38 +1,63 @@
+// set Kite variable 
+let kite = {
+  cx: 75,
+  cy: 40,
+};
+
+// set Grass count array
 let blades = []; // array of Jitter objects
+
+// set Gradient variables
 const Y_AXIS = 1;
 let b1, b2, c1, c2;
 
 
+
+
 function setup() {
   createCanvas(700, 400);
-
+  
 // define colors
   b1 = color(255);
   b2 = color(0);
   c1 = color(209, 227, 255);
   c2 = color(0, 102, 153);
 
+   // Initialize grass
+  for (let i = 0; i < 2000; i++) {
+    blades.push(new Grass());
+  }
+
+  
   
 }
 
 function draw() {
-  background(255);
 
+// Draw Background
   setGradient(0, 0, width, height, c1, c2, Y_AXIS);
 
+// Draw grass
   fill(162, 232, 173);
   rect(0,385,700,390);
-
- // Create objects
-  for (let i = 0; i < 300; i++) {
-    blades.push(new Grass());
-  }
 
   for (let i = 0; i < blades.length; i++) {
     blades[i].move();
     blades[i].display();
-  }
 }
+
+// Draw Kite
+  fill(250,200,200);
+  
+ let y1 = map(mouseY, 0, height, 25, 300, true);
+  
+//   pushMatrix();
+//   translate(400,0);
+  quad(kite.cx, y1-40, kite.cx+25, y1, kite.cx, y1+40, kite.cx-75, y1)
+  // popMatrix();
+  
+}
+
 
 function setGradient(x, y, w, h, c1, c2, axis) {
   noFill();
