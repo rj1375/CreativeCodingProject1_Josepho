@@ -21,8 +21,10 @@ function setup() {
   for (let i = 0; i < 2000; i++) {
     blades.push(new Grass());
   }
-  for (let i = 0; i < 100; i++){
-    if(i < 60){
+  
+  // Initialize clouds
+  for (let i = 0; i < 250; i++){
+    if(i < 200){
       max = 1;
     }else{
       max=4;
@@ -47,7 +49,7 @@ function draw() {
 // Draw grass
   noStroke();
   fill(162, 232, 173);
-  rect(0,385,700,390);
+  rect(0,375,700,390);
 
   for (let i = 0; i < blades.length; i++) {
     blades[i].move();
@@ -86,42 +88,52 @@ class Grass {
 
   display() {
     
-    stroke(184, 242, 192)
-    line(this.x,this.y-30,this.x-2,this.y-this.length)
-    noStroke()
-    fill(182, 242, 189)
-    ellipse(this.x, this.y-15,3,this.length)
-    fill(162, 232, 173)
-    ellipse(this.x, this.y, 5,this.length);
+    
+    stroke(101, 201, 112)
+    line(this.x-35, this.y+10,this.x,this.y-this.length)
+    stroke(162, 232, 173)
+    line(this.x-40, this.y+10, this.x,this.y-this.length);
+    stroke(219, 255, 223)
+    line(this.x-30,this.y+20,this.x,this.y-this.length)
     
   }
 }
 
+
+
 class Cloud {
   constructor(max) {
-    this.x = random(0, width);
-    this.y = random(0, 300);
-    this.size = random(0.5,max);
+    this.x = random(-20, width);
+    this.y = random(0, 275);
+    this.size = random(0.1,max);
   }
   
   display() {
+
+  // white part of the cloud
     
-     fill(255, 255, 255,230);
+     fill(255, 255, 255,200);
      noStroke();
-     ellipse(this.x, this.y, 25 * this.size, 5 * this.size)
-     ellipse(this.x + 10, this.y, 25 * this.size, 10 * this.size)
-     ellipse(this.x + 40, this.y, 50 * this.size, 7 * this.size)
-     ellipse(this.x + 40, this.y, 10 * this.size, 12 * this.size)
+     ellipse(this.x, this.y-5, 25 * this.size, 20 * this.size)
+     ellipse(this.x + 10, this.y-5, 20 * this.size, 20 * this.size)
+     ellipse(this.x + 25, this.y-5, 20 * this.size, 20 * this.size)
+     ellipse(this.x + 40, this.y-5, 30 * this.size, 20 * this.size)
+    
      arc(this.x, this.y, 25 * this.size, 20 * this.size, PI + TWO_PI, TWO_PI);
      arc(this.x + 10, this.y, 25 * this.size, 45 * this.size, PI + TWO_PI, TWO_PI);
      arc(this.x + 25, this.y, 25 * this.size, 35 * this.size, PI + TWO_PI, TWO_PI);
-     arc(this.x + 40, this.y, 50 * this.size, 20 * this.size, PI + TWO_PI, TWO_PI);
-    fill(235, 239, 240,150)
+     arc(this.x + 40, this.y, 30 * this.size, 20 * this.size, PI + TWO_PI, TWO_PI);
+    
+    
+//  // center blue tint of the cloud
+    
+    fill(247, 252, 255,50)
     noStroke();
-    ellipse(this.x, this.y, 25 * this.size, 5 * this.size)
-    ellipse(this.x + 10, this.y, 15 * this.size, 10 * this.size)
-    ellipse(this.x + 40, this.y, 15 * this.size, 7 * this.size)
-    ellipse(this.x + 40, this.y, 10 * this.size, 12 * this.size)
+    ellipse(this.x, this.y, 10 * this.size, 5 * this.size)
+    ellipse(this.x + 10, this.y, 20 * this.size, 10 * this.size)
+    ellipse(this.x + 40, this.y, 20 * this.size, 7 * this.size)
+    ellipse(this.x + 20, this.y, 10 * this.size, 12 * this.size)
+    
     arc(this.x, this.y, (25 * this.size)/2, (20 * this.size)/2, PI + TWO_PI, TWO_PI);
      arc(this.x + 10, this.y, (25 * this.size)/2, (45 * this.size)/2, PI + TWO_PI, TWO_PI);
      arc(this.x + 25, this.y, (25 * this.size)/2, (35 * this.size)/2, PI + TWO_PI, TWO_PI);
@@ -130,19 +142,23 @@ class Cloud {
   
   }
   
+  // speed of clouds
   
   move() {
-    if(this.size < .5){
-      this.x = this.x += 2;
+    if(this.size < 1){
+      this.x = this.x += 1;
     }
-    if(this.size < 1 && this.size > .5){
-      this.x = this.x += 3;
+    if(this.size < 1.5 && this.size > 1){
+      this.x = this.x += 0.75;
     }
-    if(this.size > 1 && this.size < 1.5){
-      this.x = this.x += 4;
+    if(this.size > 1.5 && this.size < 2){
+      this.x = this.x += 0.5;
     }
-    if(this.size > 1.5){
-      this.x = this.x += 5;
+     if(this.size > 2 && this.size < 2.5){
+      this.x = this.x += 0.25;
+     }
+    if(this.size > 3){
+      this.x = this.x += 0.01;
     }
 
     
@@ -151,7 +167,7 @@ class Cloud {
     
     if(this.x >= width+20){
       this.x = -200;
-      this.y = random(0,300);
+     
     }
   }
 }
